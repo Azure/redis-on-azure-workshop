@@ -11,8 +11,11 @@ The RedisJSON module provides JSON support for Redis. RedisJSON lets you store, 
 Azure Cache for Redis Enterprise includes RedisJSON. Once enabled, your cache becomes a powerful, superfast in-memory JSON document store.
 
 ## Learning Objective
-- How to use Redis commands for RedisJSON
-- RedisJSON using RedisOM in a .NET application
+Completing this labe will provide you with an understanding of:
+- How to use Redis CLI commands for RedisJSON
+- How to create and store JSON in Redis
+- How to modify JSON using JSONPath
+- How RedisJSON can be used in a .NET application
 
 ## Prerequisites
 - Redis CLI
@@ -25,15 +28,46 @@ Lets imagine a scenario where we are working for an online food order company. R
 
 Let's consider what a typical JSON object might look like that contains the data for the order:
 
-**JSON object here**
+```json
+{
+	"orderNumber": 0,
+    "deliveryAddress": "",
+	"orderTotal": 0.0,
+	"paid": false,
+    "shipped": false,
+	"items": [
+		{
+			"sku": "",
+			"description": "",
+			"quantity": 0,
+			"price": 0
+		}
+	]
+}
 
-We could do this using one command, but let's build up our object incrementally. Here we start with an empty object:
+```
+
+To create JSON in Redis, use the `JSON.SET` command. For example, to create an empty object:
 
 ```
 JSON.SET order $ '{}'
 ```
 
-Using `JSON.SET`, you can choose to overwrite data or work with values using JSONPath (hence the `$` - this denotes the root of the JSON object). For example, let's overwrite this inital empty object:
+To check the value, use ```JSON.GET```:
+
+```
+JSON.GET order
+```
+
+Now let's delete it:
+
+```
+JSON.DEL order
+```
+
+We could create our example JSON document above using one command, but let's build up our object incrementally. Here we start with an empty object:
+
+Using `JSON.SET`, you can choose to overwrite data or work with values using JSONPath (hence the `$` - this denotes the root of the JSON object). For example, let's start with this inital object containing a few properties:
 
 ```json
 JSON.SET order $ '{"deliveryAddress": "Microsoft UK, Thames Valley Park, Reading", "orderTotal": 0.00, "paid": false}'
@@ -64,16 +98,16 @@ JSON.TYPE order $.orderDateTime
 JSON.TYPE order $.items
 ```
 
-Let's add our pizzas!
+Let's add some items to our food order:
 
 ```json
-JSON.SET order $.items '[{"sku": "pizz-001", "description": "margherita", "quantity": 4, "price": 8.50},{"sku": "pizz-003", "description": "funghi", "quantity": 2, "price": 11.00},{"sku": "dri-008", "description": "Camden Hells Lager", "quantity": 16}]'
+JSON.SET order $.items '[{"sku": "pizza001", "description": "margherita", "quantity": 4, "price": 8.50},{"sku": "pizza003", "description": "funghi", "quantity": 2, "price": 11.00},{"sku": "drinks008", "description": "Camden Hells Lager", "quantity": 16}]'
 ```
 
 We can append additional items to the collection of pizza orders as follows:
 
 ```json
-JSON.ARRAPPEND order $.items '{"sku": "pizz-002", "description": "prosciutto", "quantity": 2, "price": 13.00}'
+JSON.ARRAPPEND order $.items '{"sku": "pizza002", "description": "prosciutto", "quantity": 2, "price": 13.00}'
 ```
 
 We can increment individual values. Let's say we want to increase the number of drinks. Here we will increment the existing number by eight:
@@ -85,10 +119,35 @@ JSON.NUMINCRBY order $.items[2].quantity 8
 ```json
 JSON.SET order $.shipped 'false'
 ```
+We can toggle boolean values:
 
 ```
 JSON.TOGGLE order $.shipped
 ```
+
+As you can see from these examples, working with JSON via the Redis CLI is efficient and intuitive once you are familar with commands and syntax.
+
+## Client libraries
+
+There are many [client libraries](https://redis.io/docs/stack/json/clients/) available for different programming languages.
+
+## .NET example
+
+Clone the following repository:
+
+```
+git clone <todo>
+```
+
+```
+cd todo-api-redis\
+```
+
+```
+dotnet run
+```
+
+Navigate to `https://localhost:7127/swagger/index.html`
 
 1. ...
 
