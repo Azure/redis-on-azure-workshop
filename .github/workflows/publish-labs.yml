@@ -1,0 +1,22 @@
+name: Publish Labs
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+        node-version: latest
+        cache: 'npm'
+    - run: npm ci
+    - run: npm run pdf
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v3.1.2
+      with:
+        name: labs
+        path: dist
