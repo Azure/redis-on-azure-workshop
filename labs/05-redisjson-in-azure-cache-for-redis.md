@@ -30,21 +30,20 @@ Let's consider what a typical JSON object might look like that contains the data
 
 ```json
 {
-	"orderNumber": 0,
-    "deliveryAddress": "",
-	"orderTotal": 0.0,
-	"paid": false,
-    "shipped": false,
-	"items": [
-		{
-			"sku": "",
-			"description": "",
-			"quantity": 0,
-			"price": 0
-		}
-	]
+   "orderNumber": 0,
+   "deliveryAddress": "",
+   "orderTotal": 0.0,
+   "paid": false,
+   "shipped": false,
+   "items":[
+      {
+         "sku": "",
+         "description": "",
+         "quantity": 0,
+         "price": 0
+      }
+   ]
 }
-
 ```
 
 To create JSON in Redis, use the `JSON.SET` command. For example, to create an empty object:
@@ -69,17 +68,17 @@ We could create our example JSON document above using one command, but let's bui
 
 Using `JSON.SET`, you can choose to overwrite data or work with values using JSONPath (hence the `$` - this denotes the root of the JSON object). For example, let's start with this inital object containing a few properties:
 
-```json
+```
 JSON.SET order $ '{"deliveryAddress": "Microsoft UK, Thames Valley Park, Reading", "orderTotal": 0.00, "paid": false}'
 ```
 
 Now let's add some top-level keys and values:
 
-```json
+```
 JSON.SET order $.orderNumber 6379
 ```
 
-```json
+```
 JSON.SET order $.orderDateTime 1682424000000
 ```
 
@@ -100,13 +99,13 @@ JSON.TYPE order $.items
 
 Let's add some items to our food order:
 
-```json
+```
 JSON.SET order $.items '[{"sku": "pizza001", "description": "margherita", "quantity": 4, "price": 8.50},{"sku": "pizza003", "description": "funghi", "quantity": 2, "price": 11.00},{"sku": "drinks008", "description": "Camden Hells Lager", "quantity": 16}]'
 ```
 
 We can append additional items to the collection of pizza orders as follows:
 
-```json
+```
 JSON.ARRAPPEND order $.items '{"sku": "pizza002", "description": "prosciutto", "quantity": 2, "price": 13.00}'
 ```
 
@@ -116,7 +115,7 @@ We can increment individual values. Let's say we want to increase the number of 
 JSON.NUMINCRBY order $.items[2].quantity 8
 ```
 
-```json
+```
 JSON.SET order $.shipped 'false'
 ```
 We can toggle boolean values:
