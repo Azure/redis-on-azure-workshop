@@ -1,0 +1,21 @@
+{
+  "name": "redis-workshop",
+  "version": "1.0.0",
+  "description": "A workshop for learning Redis",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pdf": "md-to-pdf ./labs/*.md && mkdir -p dist && mv ./labs/*.pdf ./dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/liammoat/redis-workshop.git"
+  },
+  "author": "Liam Moat",
+  "bugs": {
+    "url": "https://github.com/liammoat/redis-workshop/issues"
+  },
+  "homepage": "https://github.com/liammoat/redis-workshop#readme",
+  "devDependencies": {
+    "md-to-pdf": "^5.2.3"
+  }
+}
