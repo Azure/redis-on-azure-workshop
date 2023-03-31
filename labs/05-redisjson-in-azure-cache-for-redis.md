@@ -18,13 +18,13 @@ Completing this labe will provide you with an understanding of:
 - How RedisJSON can be used in a .NET application
 
 ## Prerequisites
-- Redis CLI
+- Redis CLI or RedisInsight v2 (Microsoft Store [link](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
 - Redis Stack or Azure Cache for Redis (Enterprise) with the JSON module enabled
 - .NET 6
 
 ## Steps
 
-Lets imagine a scenario where we are working for an online food order company. Redis and Microsoft are running a developer meetup and have decided to order in some food and refreshments for the guests.
+Lets imagine a scenario where we are working for an online food order company. Redis and Microsoft are running a developer meetup and have decided to order in some food 🍕 and refreshments 🥤 for the guests.
 
 Let's consider what a typical JSON object might look like that contains the data for the order:
 
@@ -130,7 +130,14 @@ As you can see from these examples, working with JSON via the Redis CLI is effic
 
 There are many [client libraries](https://redis.io/docs/stack/json/clients/) available for different programming languages.
 
+For .NET developers:
+
+- https://github.com/redis/NRedisStack
+- https://github.com/redis/redis-om-dotnet
+
 ## .NET example
+
+https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio-code
 
 Clone the following repository:
 
@@ -139,7 +146,7 @@ git clone <todo>
 ```
 
 ```
-cd todo-api-redis\
+cd todo-api-redis
 ```
 
 ```
