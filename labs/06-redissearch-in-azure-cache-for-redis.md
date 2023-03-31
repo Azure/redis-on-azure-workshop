@@ -19,13 +19,83 @@ RediSearch adds search capabilities to Redis and includes many other powerful fe
 - Perform queries using RediSearch commands.
 
 ## Prerequisites
-...
+- Redis CLI or RedisInsight v2 (Microsoft Store [link](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
+- Redis Stack or Azure Cache for Redis (Enterprise) with the Search module enabled
 
 ## Steps
 
 1. ...
 
 2. ...
+
+**Index Creation**
+
+```
+FT.CREATE idx:beers ON hash PREFIX 1 "beer:" SCHEMA name TEXT SORTABLE brewery TEXT SORTABLE breweryid NUMERIC SORTABLE category TEXT SORTABLE categoryid NUMERIC SORTABLE style TEXT SORTABLE styleid NUMERIC SORTABLE abv NUMERIC SORTABLE
+```
+
+```
+FT.CREATE idx:categories ON hash PREFIX 1 "beer:" SCHEMA category TEXT PHONETIC dm:en
+```
+
+```
+FT.CREATE idx:styles ON hash PREFIX 1 "beer:" SCHEMA style TEXT PHONETIC dm:en
+```
+
+```
+FT.CREATE idx:breweries ON HASH PREFIX 1 "brewery:" SCHEMA name TEXT state TEXT
+```
+
+**Queries**
+
+Get the beers that have IPA in a field:
+
+```
+FT.SEARCH idx:beers IPA
+```
+
+Get the beers that are "North American Ales":
+
+```
+FT.SEARCH idx:categories "North American Ales"
+```
+
+Get the beers with “Amreica” as the style (note the misspelling):
+```
+FT.SEARCH idx:styles Amreica
+```
+Get the beers that have a category of Lager:
+```
+FT.SEARCH idx:categories Lager
+```
+Get the beers that have a style of Lager but omit Amber:
+```
+FT.SEARCH idx:styles "Lager -Amber"
+```
+Get the beers that have an abv between 4 and 8:
+```
+FT.SEARCH idx:beers "@abv:[4 8]"
+```
+Find your favorite beer:
+```
+FT.Search idx:beers Pils
+```
+Find all the beers of your favorite category:
+```
+FT.Search idx:styles Pilsner
+```
+Find all the beers of your favorite category at your favorite brewery:
+```
+FT.SEARCH "idx:beers" "@category:Lager @brewery:Boulevard Brewing Company"
+```
+Find all of the beers where the ABV is greater than 4.5:
+```
+FT.SEARCH idx:beers "@abv:[(4 inf]"
+```
+Find all the beers that have a style of Lager but omit Amber AND have an ABV between 6 and 10:
+```
+FT.SEARCH idx:beers "@abv:[6 10] @style:Lager -Amber"
+```
 
 ## Additional Resources
 
