@@ -56,8 +56,6 @@ In this scenario, you learn how to create an Azure Cache for Redis. You then lea
     > 1. **Premium:** High-performance OSS Redis caches. This tier offers higher throughput, lower latency, better availability, and more features. Premium caches are deployed on more powerful VMs compared to the VMs for Basic or Standard caches.
     > 1. **Enterprise:** High-performance caches powered by Redis Inc.'s Redis Enterprise software. This tier supports Redis modules including RediSearch, RedisBloom, RedisJSON, and RedisTimeSeries. Also, it offers even higher availability than the Premium tier.
     > 1. **Enterprise Flash:** Cost-effective large caches powered by Redis Inc.'s Redis Enterprise software. This tier extends Redis data storage to nonvolatile memory, which is cheaper than DRAM, on a VM. It reduces the overall per-GB memory cost.
-    >
-    > You can control the amount of cache memory available on each tier - this is selected by choosing a cache level from C0-C6 for Basic/Standard and P0-P4 for Premium. Check the pricing page for full details.
 
 1. Get the details of the Azure Cache for Redis instance
 
@@ -144,12 +142,12 @@ A popular high-performance Redis client for the .NET language is [StackExchange.
     > **Please note**: Do not run these commands in the Redis Console.
 
     ```bash
-    dotnet new console -o redis-cache-dotnet
+    dotnet new console --name redis-cache-dotnet
     cd redis-cache-dotnet
     code .
     ```
 
-1. From the console, add the ```StackExchange.Redis``` NuGet package to the project:
+1. Add the NuGet package ```ServiceStack.Redis``` using the terminal shell.:
 
     ```bash
     dotnet add package StackExchange.Redis
