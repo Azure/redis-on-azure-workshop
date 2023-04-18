@@ -6,7 +6,7 @@ The world is moving faster than ever, and software needs to keep up with the dem
 ### Labs
 
 1. [Lab 1 - Explore Azure Cache for Redis](./labs/01-explore-azure-cache-for-redis.md)
-2. [Lab 2 - Data in Azure Cache for Redis](./labs/02-work-with-and-manage-data-in-azure-cache-for-redis.md)
+2. [Lab 2 - Data in Azure Cache for Redis](./labs/02-data-in-azure-cache-for-redis.md)
 3. [Lab 3 - Pub/Sub in Azure Cache for Redis](./labs/03-pub-sub-in-azure-cache-for-redis.md)
 4. [Lab 4 - Streams in Azure Cache for Redis](./labs/04-streams-in-azure-cache-for-redis.md)
 5. [Lab 5 - RedisJSON in Azure Cache for Redis](./labs/05-redisjson-in-azure-cache-for-redis.md)
