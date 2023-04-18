@@ -137,7 +137,7 @@ For .NET developers:
 
 ## .NET Examples
 
-In the example above we used the Redis CLI to execute RedisJSON commands. To see how we can leverage RedisJSON in applications, there are two examples provided in the following Github repository.
+In the example above we used the Redis CLI to execute RedisJSON commands. To see how we can leverage RedisJSON in applications, there are two examples provided in Github.
 
 To get started, clone the following repository:
 
@@ -160,7 +160,7 @@ This is a simple console application to demonstrate how a JSON document can be c
 
 Notice how the methods map to Redis CLI commands that were used earlier in the lab. 
 
-The second example is a simple web API. It's based on the example ['Todo API' from Microsoft](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio-code) but uses Redis and RedisJSON for persistance:
+The second example is a simple web API. It's based on the example ['Todo API' from Microsoft](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio-code) but uses Redis and RedisJSON for persistence:
 
 ```
 cd redis-api-example
