@@ -4,14 +4,14 @@ JSON (JavaScript Object Notation) is an open standard file and data interchange 
 
 JSON is supported by most programming languages, and typically native objects and arrays are encoded as JSON (serialized), before being sent over the network or written to a file. Parsing JSON, or deserialization, is the opposite of this process.
 
-Storing JSON in Azure Cache for Redis let's you work with JSON values directly, without the need for multiple operations to retrieve, update or access values within the data. When working with JSON in your cache, there's no need to serialize and deserialize data.
+Storing JSON in Azure Cache for Redis Enterprise let's you work with JSON values directly, without the need for multiple operations to retrieve, update or access values within the data. When working with JSON in your cache, there's no need to serialize and deserialize data.
 
 The RedisJSON module provides JSON support for Redis. RedisJSON lets you store, update, and retrieve JSON values in a Redis database, similar to any other Redis data type.
 
 Azure Cache for Redis Enterprise includes RedisJSON. Once enabled, your cache becomes a powerful, superfast in-memory JSON document store.
 
 ## Learning Objective
-Completing this labe will provide you with an understanding of:
+Completing this lab will provide you with an understanding of:
 - How to use Redis CLI commands for RedisJSON
 - How to create and store JSON in Redis
 - How to modify JSON using JSONPath
@@ -19,8 +19,8 @@ Completing this labe will provide you with an understanding of:
 
 ## Prerequisites
 - Redis CLI or RedisInsight v2 (Microsoft Store [link](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
-- Redis Stack or Azure Cache for Redis (Enterprise) with the JSON module enabled
-- .NET 6
+- Redis Stack or Azure Cache for Redis Enterprise with the JSON module enabled
+- .NET 6 (for the code examples)
 
 ## Steps
 
@@ -100,7 +100,7 @@ JSON.TYPE order $.items
 Let's add some items to our food order:
 
 ```
-JSON.SET order $.items '[{"sku": "pizza001", "description": "margherita", "quantity": 4, "price": 8.50},{"sku": "pizza003", "description": "funghi", "quantity": 2, "price": 11.00},{"sku": "drinks008", "description": "Camden Hells Lager", "quantity": 16}]'
+JSON.SET order $.items '[{"sku": "pizza001", "description": "margherita", "quantity": 4, "price": 8.50},{"sku": "pizza003", "description": "funghi", "quantity": 2, "price": 11.00},{"sku": "drinks008", "description": "Camden Hells Lager", "quantity": 16, "price": 4.00}]'
 ```
 
 We can append additional items to the collection of pizza orders as follows:
@@ -124,7 +124,7 @@ We can toggle boolean values:
 JSON.TOGGLE order $.shipped
 ```
 
-As you can see from these examples, working with JSON via the Redis CLI is efficient and intuitive once you are familar with commands and syntax.
+As you can see from these examples, working with JSON via the Redis CLI is efficient and intuitive once you are familiar with commands and syntax.
 
 ## Client libraries
 
@@ -135,29 +135,53 @@ For .NET developers:
 - https://github.com/redis/NRedisStack
 - https://github.com/redis/redis-om-dotnet
 
-## .NET example
+## .NET Examples
 
-https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio-code
+In the example above we used the Redis CLI to execute RedisJSON commands. To see how we can leverage RedisJSON in applications, there are two examples provided in the following Github repository.
 
-Clone the following repository:
-
-```
-git clone <todo>
-```
+To get started, clone the following repository:
 
 ```
-cd todo-api-redis
+git clone https://github.com/Redislabs-Solution-Architects/redis-msft-labs.git
 ```
+
+Change your directory to the following:
+
+```
+cd redis-json-example
+```
+Now run this command:
 
 ```
 dotnet run
 ```
 
-Navigate to `https://localhost:7127/swagger/index.html`
+This is a simple console application to demonstrate how a JSON document can be created using .NET. In the example the NRedisStack package has been added to the project.
 
-1. ...
+Notice how the methods map to Redis CLI commands that were used earlier in the lab. 
 
-2. ...
+The second example is a simple web API. It's based on the example ['Todo API' from Microsoft](https://learn.microsoft.com/en-us/aspnet/core/tutorials/first-web-api?view=aspnetcore-7.0&tabs=visual-studio-code) but uses Redis and RedisJSON for persistance:
+
+```
+cd redis-api-example
+```
+
+This example shows how typical CRUD operations used by web services can be achieved using Redis OM.
+
+Redis OM provides high-level abstractions for using Redis in .NET, making it easy to model and query your Redis domain objects.
+
+To start the web service:
+
+```
+dotnet run
+```
+
+Now, navigate to 
+
+```
+https://localhost:7127/swagger/index.html
+````
+
 
 ## Additional Resources
 
