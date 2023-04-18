@@ -175,13 +175,13 @@ A popular high-performance Redis client for the .NET language is [StackExchange.
 1. Once you have a ```IDatabase``` object, you can execute methods to interact with the cache. Here is an example of storing a key/value in the cache:
 
     ```csharp
-    bool wasSet = db.StringSet("favorite:flavor", "i-love-rocky-road");
+    bool wasSet = db.StringSet("favourite:flavor", "i-love-rocky-road");
     ```
 
 1. We can then retrieve the value with the ```StringGet``` method:
 
     ```csharp
-    string value = db.StringGet("favorite:flavor");
+    string value = db.StringGet("favourite:flavor");
     Console.WriteLine(value); // displays: ""i-love-rocky-road""
     ```
 
@@ -233,7 +233,7 @@ Redis is oriented around binary safe strings, but you can cache off object graph
     }
     ```
 
-1. Returning to ```Program.cs``` we can using ```System.Text.Json``` to serialize to and desialise from JSON. Update ```Program.cs``` to include the following:
+1. Returning to ```Program.cs``` we can using ```System.Text.Json``` to serialize to and deserialize from JSON. Update ```Program.cs``` to include the following:
 
     ```csharp
     using StackExchange.Redis;
@@ -243,9 +243,9 @@ Redis is oriented around binary safe strings, but you can cache off object graph
     var redisConnection = ConnectionMultiplexer.Connect(connectionString);
 
     IDatabase db = redisConnection.GetDatabase();
-    bool wasSet = db.StringSet("favorite:flavor", "i-love-rocky-road");
+    bool wasSet = db.StringSet("favourite:flavor", "i-love-rocky-road");
 
-    string value = db.StringGet("favorite:flavor");
+    string value = db.StringGet("favourite:flavor");
     Console.WriteLine(value); // displays: ""i-love-rocky-road""
 
     var executeResult = db.Execute("ping");
