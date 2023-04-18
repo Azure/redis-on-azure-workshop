@@ -147,7 +147,7 @@ A popular high-performance Redis client for the .NET language is [StackExchange.
     code .
     ```
 
-1. Add the NuGet package ```ServiceStack.Redis``` using the terminal shell.:
+1. Add the NuGet package ```StackExchange.Redis``` using the terminal shell.:
 
     ```bash
     dotnet add package StackExchange.Redis
