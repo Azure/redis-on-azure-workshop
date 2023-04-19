@@ -9,14 +9,26 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
+    
     - uses: actions/setup-node@v3
       with:
         node-version: latest
         cache: 'npm'
+        
     - run: npm ci
+    
     - run: npm run pdf
-    - name: Upload a Build Artifact
-      uses: actions/upload-artifact@v3.1.2
+    
+    - name: Zip Release
+      uses: TheDoctor0/zip-release@0.7.1
       with:
-        name: labs
         path: dist
+        
+    - uses: azure/login@v1
+      with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+    - uses: azure/CLI@v1
+      with:
+        inlineScript: |
+            az storage blob upload --account-name redisworkshopstorage --auth-mode key -f release.zip -c '$web'
