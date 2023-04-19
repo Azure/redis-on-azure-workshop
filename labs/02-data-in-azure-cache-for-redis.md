@@ -32,7 +32,7 @@ Use Azure Cache for Redis to store frequently accessed data. Learn how to use ``
 1. ```ServiceStack.Redis``` has its own connection string format: "[password]@[hostname]:[sslport]?ssl=true". Use the ```az redis list-keys``` command to retrieve the access keys and output a correctly formatted connection string.
 
     ```bash
-    REDIS_NAME=<redis-name> name
+    REDIS_NAME=<redis-name>
     REDIS_KEY=$(az redis list-keys \
                 --name "$REDIS_NAME" \
                 --resource-group <resource-group> \
