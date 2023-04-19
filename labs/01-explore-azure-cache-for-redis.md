@@ -71,12 +71,12 @@ In this scenario, you learn how to create an Azure Cache for Redis. You then lea
     keys=($(az redis list-keys --name msdocs-redis-cache --resource-group redis-cache-rg --query "[primaryKey,secondaryKey]" --output tsv))
 
     # Display the retrieved hostname, keys, and ports
-    echo "Hostname:" ${redis[1]}
+    echo "Hostname:" ${redis[0]}
     echo "Non SSL Port:" ${redis[3]}
     echo "Non SSL Port Enabled:" ${redis[2]}
     echo "SSL Port:" ${redis[4]}
-    echo "Primary Key:" ${keys[1]}
-    echo "Secondary Key:" ${keys[2]}
+    echo "Primary Key:" ${keys[0]}
+    echo "Secondary Key:" ${keys[1]}
     ```
 
 ## Accessing the Redis instance using the Redis Console
