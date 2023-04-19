@@ -118,12 +118,12 @@ You can securely issue commands to your Azure Cache for Redis instances using th
 ## Adding an expiration time to values
 Caching is important because it allows us to store commonly used values in memory. However, we also need a way to expire values when they are stale. In Redis this is done by applying a time to live (TTL) to a key.
 
-1. Follow the steps in the script below to add a time to live to ```counter``` key:
+1. Follow the steps in the script below to add a time to live of 15 seconds to ```counter``` key:
 
     ```console
     > set counter 100
     OK
-    > expire counter 5
+    > expire counter 15
     (integer) 1
     > get counter
     100
