@@ -211,25 +211,8 @@ Redis is oriented around binary safe strings, but you can cache off object graph
         public string Sport { get; set; }
         public DateTimeOffset DatePlayed { get; set; }
         public string Game { get; set; }
-        public IReadOnlyList<string> Teams { get; set; }
-        public IReadOnlyList<(string team, int score)> Results { get; set; }
-
-        public GameStat(string sport, DateTimeOffset datePlayed, string game, string[] teams, IEnumerable<(string team, int score)> results)
-        {
-            Id = Guid.NewGuid().ToString();
-            Sport = sport;
-            DatePlayed = datePlayed;
-            Game = game;
-            Teams = teams.ToList();
-            Results = results.ToList();
-        }
-
-        public override string ToString()
-        {
-            return $"{Sport} {Game} played on {DatePlayed.Date.ToShortDateString()} - " +
-                $"{String.Join(',', Teams)}\r\n\t" + 
-                $"{String.Join('\t', Results.Select(r => $"{r.team } - {r.score}\r\n"))}";
-        }
+        public IList<string> Teams { get; set; }
+        public IList<(string team, int score)> Results { get; set; }
     }
     ```
 
@@ -254,12 +237,12 @@ Redis is oriented around binary safe strings, but you can cache off object graph
     // Use the System.Text.Json to turn an instance of this object into a string:
     var stat = new GameStat
     {
-        Id = Guid.NewGuid().ToString(),
+        Id = "1950-world-cup",
         Sport = "Soccer",
-        DatePlayed = new DateTime(2019, 7, 16),
-        Game = "Local Game",
-        Teams = new[] { "Team 1", "Team 2" },
-        Results = new[] { ("Team 1", 2), ("Team 2", 1) }
+        DatePlayed = new DateTime(1950, 7, 16),
+        Game = "FIFA World Cup",
+        Teams = new[] { "Uruguay", "Brazil" },
+        Results = new[] { ("Uruguay", 2), ("Brazil", 1) }
     };
 
     string jsonString = JsonSerializer.Serialize(stat);
