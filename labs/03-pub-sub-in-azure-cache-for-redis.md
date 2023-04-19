@@ -170,6 +170,15 @@ Observe two separate clients sending and receiving messages by using two unique 
     });
     ```
 
+1. To prevent the application from terminating, we'll use the ```Console.ReadKey()``` method to wait for user input:
+
+    ```csharp
+    Console.WriteLine("Listening for messages. Press any key to exit.");
+    Console.ReadKey();
+    ```
+
+    > This will prevent the application from terminating and allow us to listen for messages on the ```org.shipping.alerts``` channel.
+
 1. Run the ```redis-sub``` project and leave it running in the background.
 
     ```bash
