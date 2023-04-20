@@ -185,4 +185,5 @@ https://localhost:7127/swagger/index.html
 
 ## Additional Resources
 
-1. [Redis JSON and Search Webinar](https://github.com/Redislabs-Solution-Architects/json-search-demo)
+1. [Redis JSON documentation](https://redis.io/docs/stack/json/)
+2. [Redis JSON and Search Resources in GitHub](https://github.com/Redislabs-Solution-Architects/json-search-demo)
