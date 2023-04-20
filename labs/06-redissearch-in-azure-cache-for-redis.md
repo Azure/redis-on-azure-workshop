@@ -13,8 +13,7 @@ Typically this is where a key/value model starts to show its limitations. To sea
 RediSearch adds search capabilities to Redis and includes many other powerful features, and it does so right where your data lives. This means you can process much larger volumes of data and at greater speed.
 
 ## Learning Objective
-- Learn which data structures can be used with RediSearch.
-- Explore an example data set.
+- Create a sample data set.
 - Create a RediSearch index.
 - Perform queries using RediSearch commands.
 
@@ -22,81 +21,256 @@ RediSearch adds search capabilities to Redis and includes many other powerful fe
 - Redis CLI (see [here](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-redis-cli-tool)) or RedisInsight v2 (see [here](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
 - Redis Stack or Azure Cache for Redis (Enterprise) with the Search module enabled
 
-## Steps
+## Data Set <a name="dataset"></a>
+```JSON
+[
+    {   
+        "id": 15970,
+        "gender": "Men",
+        "season":["Fall", "Winter"],
+        "description": "Turtle Check Men Navy Blue Shirt",
+        "price": 34.95,
+        "city": "Boston",
+        "location": "42.361145, -71.057083"
+    },
+    {
+        "id": 59263,
+        "gender": "Women",
+        "season": ["Fall", "Winter", "Spring", "Summer"],
+        "description": "Titan Women Silver Watch",
+        "price": 129.99,
+        "city": "Dallas",
+        "location": "32.779167, -96.808891"
+    },
+    {
+        "id": 46885,
+        "gender": "Boys",
+        "season": ["Fall"],
+        "description": "Ben 10 Boys Navy Blue Slippers",
+        "price": 45.99,
+        "city": "Denver",
+        "location": "39.742043, -104.991531"
+    }
+]
+```
+## Data Loading <a name="loading"></a>
+```bash
+JSON.SET product:15970 $ '{"id": 15970, "gender": "Men", "season":["Fall", "Winter"], "description": "Turtle Check Men Navy Blue Shirt", "price": 34.95, "city": "Boston", "coords": "-71.057083, 42.361145"}'
+```
+```bash
+JSON.SET product:59263 $ '{"id": 59263, "gender": "Women", "season":["Fall", "Winter", "Spring", "Summer"],"description": "Titan Women Silver Watch", "price": 129.99, "city": "Dallas", "coords": "-96.808891, 32.779167"}'
+```
+```bash
+JSON.SET product:46885 $ '{"id": 46885, "gender": "Boys", "season":["Fall"], "description": "Ben 10 Boys Navy Blue Slippers", "price": 45.99, "city": "Denver", "coords": "-104.991531, 39.742043"}'
+```
+## Index Creation <a name="index_creation"></a>
+### Syntax
+[FT.CREATE](https://redis.io/commands/ft.create/)
+#### Command
+```bash
+FT.CREATE idx1 ON JSON PREFIX 1 product: SCHEMA $.id as id NUMERIC $.gender as gender TAG $.season.* AS season TAG $.description AS description TEXT $.price AS price NUMERIC $.city AS city TEXT $.coords AS coords GEO
+```
+#### Result
+```bash
+"OK"
+```
 
-1. ...
-
-2. ...
-
-**Index Creation**
-
+## Search Examples <a name="search_examples"></a>
+### Syntax
+[FT.SEARCH](https://redis.io/commands/ft.search/)
+### Retrieve All <a name="retrieve_all"></a>
+Find all documents for a given index.
+#### Command
+```bash
+FT.SEARCH idx1 *
 ```
-FT.CREATE idx:beers ON hash PREFIX 1 "beer:" SCHEMA name TEXT SORTABLE brewery TEXT SORTABLE breweryid NUMERIC SORTABLE category TEXT SORTABLE categoryid NUMERIC SORTABLE style TEXT SORTABLE styleid NUMERIC SORTABLE abv NUMERIC SORTABLE
-```
-
-```
-FT.CREATE idx:categories ON hash PREFIX 1 "beer:" SCHEMA category TEXT PHONETIC dm:en
-```
-
-```
-FT.CREATE idx:styles ON hash PREFIX 1 "beer:" SCHEMA style TEXT PHONETIC dm:en
-```
-
-```
-FT.CREATE idx:breweries ON HASH PREFIX 1 "brewery:" SCHEMA name TEXT state TEXT
-```
-
-**Queries**
-
-Get the beers that have IPA in a field:
-
-```
-FT.SEARCH idx:beers IPA
+#### Result
+```bash
+1) "3"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
+4) "product:59263"
+5) 1) "$"
+   2) "{\"id\":59263,\"gender\":\"Women\",\"season\":[\"Fall\",\"Winter\",\"Spring\",\"Summer\"],\"description\":\"Titan Women Silver Watch\",\"price\":129.99,\"city\":\"Dallas\",\"coords\":\"-96.808891, 32.779167\"}"
+6) "product:15970"
+7) 1) "$"
+   2) "{\"id\":15970,\"gender\":\"Men\",\"season\":[\"Fall\",\"Winter\"],\"description\":\"Turtle Check Men Navy Blue Shirt\",\"price\":34.95,\"city\":\"Boston\",\"coords\":\"-71.057083, 42.361145\"}"
 ```
 
-Get the beers that are "North American Ales":
+### Single Term Text <a name="single_term"></a>
+Find all documents with a given word in a text field.
+#### Command
+```bash
+FT.SEARCH idx1 '@description:Slippers'
+```
+#### Result
+```bash
+1) "1"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
+```
 
+### Exact Phrase Text <a name="exact_phrase"></a>
+Find all documents with a given phrase in a text field.
+#### Command
+```bash
+FT.SEARCH idx1 '@description:("Blue Shirt")'
 ```
-FT.SEARCH idx:categories "North American Ales"
+#### Result
+```bash
+1) "1"
+2) "product:15970"
+3) 1) "$"
+   2) "{\"id\":15970,\"gender\":\"Men\",\"season\":[\"Fall\",\"Winter\"],\"description\":\"Turtle Check Men Navy Blue Shirt\",\"price\":34.95,\"city\":\"Boston\",\"coords\":\"-71.057083, 42.361145\"}"
 ```
 
-Get the beers with “Amreica” as the style (note the misspelling):
+### Numeric Range <a name="numeric_range"></a>
+Find all documents with a numeric field in a given range.
+#### Command
+```bash
+FT.SEARCH idx1 '@price:[40,130]'
 ```
-FT.SEARCH idx:styles Amreica
+#### Result
+```bash
+1) "2"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
+4) "product:59263"
+5) 1) "$"
+   2) "{\"id\":59263,\"gender\":\"Women\",\"season\":[\"Fall\",\"Winter\",\"Spring\",\"Summer\"],\"description\":\"Titan Women Silver Watch\",\"price\":129.99,\"city\":\"Dallas\",\"coords\":\"-96.808891, 32.779167\"}"
 ```
-Get the beers that have a category of Lager:
+
+### Tag Array <a name="tag_array"></a>
+Find all documents that contain a given value in an array field (tag).
+#### Command
+```bash
+FT.SEARCH idx1 '@season:{Spring}'
 ```
-FT.SEARCH idx:categories Lager
+#### Result
+```bash
+1) "1"
+2) "product:59263"
+3) 1) "$"
+   2) "{\"id\":59263,\"gender\":\"Women\",\"season\":[\"Fall\",\"Winter\",\"Spring\",\"Summer\"],\"description\":\"Titan Women Silver Watch\",\"price\":129.99,\"city\":\"Dallas\",\"coords\":\"-96.808891, 32.779167\"}"
 ```
-Get the beers that have a style of Lager but omit Amber:
+
+### Logical AND <a name="logical_and"></a>
+Find all documents contain both a numeric field in a range and a word in a text field.
+#### Command
+```bash
+FT.SEARCH idx1 '@price:[40, 100] @description:Blue'
 ```
-FT.SEARCH idx:styles "Lager -Amber"
+#### Result
+```bash
+1) "1"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
 ```
-Get the beers that have an abv between 4 and 8:
+
+### Logical OR <a name="logical_or"></a>
+Find all documents that either match tag value or text value.
+#### Command
+```bash
+FT.SEARCH idx1 '(@gender:{Women})|(@city:Boston)'
 ```
-FT.SEARCH idx:beers "@abv:[4 8]"
+#### Result
+```bash
+1) "2"
+2) "product:59263"
+3) 1) "$"
+   2) "{\"id\":59263,\"gender\":\"Women\",\"season\":[\"Fall\",\"Winter\",\"Spring\",\"Summer\"],\"description\":\"Titan Women Silver Watch\",\"price\":129.99,\"city\":\"Dallas\",\"coords\":\"-96.808891, 32.779167\"}"
+4) "product:15970"
+5) 1) "$"
+   2) "{\"id\":15970,\"gender\":\"Men\",\"season\":[\"Fall\",\"Winter\"],\"description\":\"Turtle Check Men Navy Blue Shirt\",\"price\":34.95,\"city\":\"Boston\",\"coords\":\"-71.057083, 42.361145\"}"
 ```
-Find your favorite beer:
+
+### Negation <a name="negation"></a>
+Find all documents that do not contain a given word in a text field.
+#### Command
+```bash
+FT.SEARCH idx1 '-(@description:Shirt)'
 ```
-FT.Search idx:beers Pils
+#### Result
+```bash
+1) "2"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
+4) "product:59263"
+5) 1) "$"
+   2) "{\"id\":59263,\"gender\":\"Women\",\"season\":[\"Fall\",\"Winter\",\"Spring\",\"Summer\"],\"description\":\"Titan Women Silver Watch\",\"price\":129.99,\"city\":\"Dallas\",\"coords\":\"-96.808891, 32.779167\"}"
 ```
-Find all the beers of your favorite category:
+
+### Prefix <a name="prefix"></a>
+Find all documents that have a word that begins with a given prefix value.
+#### Command
+```bash
+FT.SEARCH idx1 '@description:Nav*'
 ```
-FT.Search idx:styles Pilsner
+#### Result
+```bash
+1) "2"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
+4) "product:15970"
+5) 1) "$"
+   2) "{\"id\":15970,\"gender\":\"Men\",\"season\":[\"Fall\",\"Winter\"],\"description\":\"Turtle Check Men Navy Blue Shirt\",\"price\":34.95,\"city\":\"Boston\",\"coords\":\"-71.057083, 42.361145\"}"
 ```
-Find all the beers of your favorite category at your favorite brewery:
+
+### Suffix <a name="suffix"></a>
+Find all documents that contain a word that ends with a given suffix value.
+#### Command
+```bash
+FT.SEARCH idx1 '@description:*Watch'
 ```
-FT.SEARCH "idx:beers" "@category:Lager @brewery:Boulevard Brewing Company"
+#### Result
+```bash
+1) "1"
+2) "product:59263"
+3) 1) "$"
+   2) "{\"id\":59263,\"gender\":\"Women\",\"season\":[\"Fall\",\"Winter\",\"Spring\",\"Summer\"],\"description\":\"Titan Women Silver Watch\",\"price\":129.99,\"city\":\"Dallas\",\"coords\":\"-96.808891, 32.779167\"}"
 ```
-Find all of the beers where the ABV is greater than 4.5:
+
+### Fuzzy <a name="fuzzy"></a>
+Find all documents that contain a word that is within 1 Levenshtein distance of a given word.
+#### Command
+```bash
+FT.SEARCH idx1 '@description:%wavy%'
 ```
-FT.SEARCH idx:beers "@abv:[(4 inf]"
+#### Result
+```bash
+1) "2"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
+4) "product:15970"
+5) 1) "$"
+   2) "{\"id\":15970,\"gender\":\"Men\",\"season\":[\"Fall\",\"Winter\"],\"description\":\"Turtle Check Men Navy Blue Shirt\",\"price\":34.95,\"city\":\"Boston\",\"coords\":\"-71.057083, 42.361145\"}"
 ```
-Find all the beers that have a style of Lager but omit Amber AND have an ABV between 6 and 10:
+
+### Geo <a name="geo"></a>
+Find all documents that have geographic coordinates within a given range of a given coordinate.
+Colorado Springs coords (long, lat) = -104.800644, 38.846127
+#### Command
+```bash
+FT.SEARCH idx1 '@coords:[-104.800644 38.846127 100 mi]'
 ```
-FT.SEARCH idx:beers "@abv:[6 10] @style:Lager -Amber"
+#### Result
+```bash
+1) "1"
+2) "product:46885"
+3) 1) "$"
+   2) "{\"id\":46885,\"gender\":\"Boys\",\"season\":[\"Fall\"],\"description\":\"Ben 10 Boys Navy Blue Slippers\",\"price\":45.99,\"city\":\"Denver\",\"coords\":\"-104.991531, 39.742043\"}"
 ```
+
 
 ## Additional Resources
 
-1. [Redis JSON and Search Webinar](https://github.com/Redislabs-Solution-Architects/json-search-demo)
+1. [RediSearch documentation](https://redis.io/docs/stack/search/)
+2. [RediSearch query syntax](https://redis.io/docs/stack/search/reference/query_syntax/)
+3. [Redis JSON and Search Resources in GitHub](https://github.com/Redislabs-Solution-Architects/json-search-demo)
