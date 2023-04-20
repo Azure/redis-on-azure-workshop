@@ -145,7 +145,7 @@ Observe two separate clients sending and receiving messages by using two unique 
 
     > You can obtain the ```connectionString``` from **Access keys** section of the Azure Cache for Redis instance in the Azure portal.
 
-1. Let's first setup the ```dotnet-sub``` project to listen for messages on the ```org.shipping.alerts``` channel. Get an instance of ```ISubscriber``` from the ```ConnectionMultiplexer``` :
+1. Let's first setup the ```dotnet-sub``` project to listen for messages on the ```org.shipping.alerts``` channel. Get an instance of ```ISubscriber``` from the ```ConnectionMultiplexer```:
 
     ```csharp
     ISubscriber sub = redis.GetSubscriber();

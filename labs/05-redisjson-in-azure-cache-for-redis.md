@@ -18,7 +18,7 @@ Completing this lab will provide you with an understanding of:
 - How RedisJSON can be used in a .NET application
 
 ## Prerequisites
-- Redis CLI or RedisInsight v2 (Microsoft Store [link](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
+- Redis CLI (see [here](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-redis-cli-tool)) or RedisInsight v2 (see [here](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
 - Redis Stack or Azure Cache for Redis Enterprise with the JSON module enabled
 - .NET 6 (for the code examples)
 
@@ -71,7 +71,7 @@ Using `JSON.SET`, you can choose to overwrite data or work with values using JSO
 ```
 JSON.SET order $ '{"deliveryAddress": "Microsoft UK, Thames Valley Park, Reading", "orderTotal": 0.00, "paid": false}'
 ```
-
+**Note** If you found ERR unknown command `JSON.SET` please ensure you have have Enterprise SKU.
 Now let's add some top-level keys and values:
 
 ```

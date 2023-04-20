@@ -65,7 +65,7 @@ The ```XLEN``` command counts the number of entries in a stream. Once you are re
     (integer) 3
     ```
 
-1. Use the ```XRANGE``` command and both the ```+``` and ```-```` operators to get a range of all data in the ```org.logs.clientapp``` stream:
+1. Use the ```XRANGE``` command and both the ```+``` and ```-``` operators to get a range of all data in the ```org.logs.clientapp``` stream:
 
     ```redis
     XRANGE org.logs.clientapp - +

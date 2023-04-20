@@ -47,6 +47,8 @@ Use Azure Cache for Redis to store frequently accessed data. Learn how to use ``
     ```csharp
     static string redisConnectionString = "<connection string>";
     ```
+    
+    > If you recreated your Redis instance, this won't be the same connection string from Lab 1.
 
 1. Add the following using statement to the top of the ```Program.cs``` file.
 

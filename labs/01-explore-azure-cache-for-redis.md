@@ -19,7 +19,7 @@ After completing this module, you'll be able to:
 ## Create an Azure Cache for Redis using the Azure CLI
 In this scenario, you learn how to create an Azure Cache for Redis. You then learn to get details of an Azure Cache for Redis instance, including provisioning status, the hostname, ports, and keys for an Azure Cache for Redis instance. Finally, you learn to delete the cache.
 
-1. Open a shell, with Azure CLI installed. If you don't have Azure CLI installed, follow the instructions in [Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest).
+1. Open a shell with Azure CLI installed. If you don't have Azure CLI installed, follow the instructions in [Install the Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest). 
 
     > **Note**: If you are using the Azure Cloud Shell, you can skip this step.
 
