@@ -269,3 +269,6 @@ Redis is oriented around binary safe strings, but you can cache off object graph
 
 1. [About Azure Cache for Redis](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-overview)
 1. [Develop for Azure Cache for Redis](https://learn.microsoft.com/en-us/training/modules/develop-for-azure-cache-for-redis/)
+
+___
+[Next Lab](./02-data-in-azure-cache-for-redis.md)

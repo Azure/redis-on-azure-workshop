@@ -173,3 +173,6 @@ When building an application, you want to provide a great user experience, and a
 ## Additional Resources
 
 1. [Work with mutable and partial data in Azure Cache for Redis](https://learn.microsoft.com/en-us/training/modules/work-with-mutable-and-partial-data-in-a-redis-cache/)
+
+___
+[Next Lab](./03-pub-sub-in-azure-cache-for-redis.md)

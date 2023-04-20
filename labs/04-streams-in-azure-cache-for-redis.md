@@ -242,3 +242,6 @@ The ```XLEN``` command counts the number of entries in a stream. Once you are re
 ## Additional Resources
 
 1. [Implement Pub/Sub and Streams in Azure Cache for Redis](https://learn.microsoft.com/en-us/training/modules/azure-redis-publish-subscribe-streams/)
+
+___
+[Next Lab](./05-redisjson-in-azure-cache-for-redis.md)

@@ -187,3 +187,6 @@ https://localhost:7127/swagger/index.html
 
 1. [Redis JSON documentation](https://redis.io/docs/stack/json/)
 2. [Redis JSON and Search Resources in GitHub](https://github.com/Redislabs-Solution-Architects/json-search-demo)
+
+___
+[Next Lab](./06-redissearch-in-azure-cache-for-redis.md)

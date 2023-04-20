@@ -226,3 +226,6 @@ Observe two separate clients sending and receiving messages by using two unique 
 ## Additional Resources
 
 1. [Implement Pub/Sub and Streams in Azure Cache for Redis](https://learn.microsoft.com/en-us/training/modules/azure-redis-publish-subscribe-streams/)
+
+___
+[Next Lab](./04-streams-in-azure-cache-for-redis.md)
