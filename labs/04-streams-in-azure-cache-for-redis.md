@@ -35,6 +35,7 @@ Entries are added to a new or existing stream using the ```XADD``` command. The 
     ```redis
     "1324092248593-0"
     "1481945061467-0"
+    ```
 
 1. Use the ```XADD``` command to add another new entry with an automatically generated identifier:
 
@@ -131,7 +132,7 @@ The ```XLEN``` command counts the number of entries in a stream. Once you are re
     2) 1) "1638502526759-0"
        2) 1) "application-status"
           2) "started"
-    ```redis
+    ```
     
     > The last key will not exactly match the one used in this example.
 
