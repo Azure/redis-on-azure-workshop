@@ -238,7 +238,7 @@ Redis is oriented around binary safe strings, but you can cache off object graph
     var stat = new GameStat
     {
         Id = "1950-world-cup",
-        Sport = "Soccer",
+        Sport = "Football",
         DatePlayed = new DateTime(1950, 7, 16),
         Game = "FIFA World Cup",
         Teams = new[] { "Uruguay", "Brazil" },
@@ -251,7 +251,7 @@ Redis is oriented around binary safe strings, but you can cache off object graph
     // Use the System.Text.Json to turn the string back into an instance of the object:
     var result = db.StringGet("event:1950-world-cup");
     var statResult = JsonSerializer.Deserialize<GameStat>(result.ToString());
-    Console.WriteLine(statResult.Sport); // displays "Soccer"
+    Console.WriteLine(statResult.Sport); // displays "Football"
 
     redisConnection.Dispose();
     redisConnection = null;
