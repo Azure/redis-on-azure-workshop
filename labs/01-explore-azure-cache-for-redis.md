@@ -259,6 +259,8 @@ Redis is oriented around binary safe strings, but you can cache off object graph
 
 ## Delete the Azure Cache for Redis instance
 
+> If you're going to continue with the next lab, don't delete the Redis instance.
+
 1. Use the following script to delete the Azure Cache for Redis instance:
 
     ```bash
