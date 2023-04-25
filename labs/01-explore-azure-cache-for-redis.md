@@ -79,6 +79,25 @@ In this scenario, you learn how to create an Azure Cache for Redis. You then lea
     echo "Secondary Key:" ${keys[1]}
     ```
 
+    <details><summary>Click here to see a PowerShell varient...</summary>
+    <p>
+
+    ```powershell
+    $redis=(az redis show --name msdocs-redis-cache --resource-group redis-cache-rg --query "[hostName,enableNonSslPort,port,sslPort]" --output tsv)
+    
+    $keys=(az redis list-keys --name msdocs-redis-cache --resource-group redis-cache-rg --query "[primaryKey,secondaryKey]" --output tsv)
+    
+    # Display the retrieved hostname, keys, and ports
+    echo "Hostname:" $redis[0]
+    echo "Non SSL Port:" $redis[2]
+    echo "Non SSL Port Enabled:" $redis[1]
+    echo "SSL Port:" $redis[3]
+    echo "Primary Key:" $keys[0]
+    echo "Secondary Key:" $keys[1]
+    ```
+    </p>
+    </details>
+
 ## Accessing the Redis instance using the Redis Console
 You can securely issue commands to your Azure Cache for Redis instances using the Redis Console, which is available in the Azure portal for all cache tiers.
 
