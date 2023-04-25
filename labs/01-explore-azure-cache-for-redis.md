@@ -79,7 +79,7 @@ In this scenario, you learn how to create an Azure Cache for Redis. You then lea
     echo "Secondary Key:" ${keys[1]}
     ```
 
-    > If you're using PowerShell, you can use the script below...</summary>
+    > If you're using PowerShell, you can use the script below...
     > 
     > ```powershell
     > $redis=(az redis show --name msdocs-redis-cache --resource-group redis-cache-rg --query "[hostName,enableNonSslPort,port,sslPort]" --output tsv)
