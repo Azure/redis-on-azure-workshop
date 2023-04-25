@@ -19,7 +19,10 @@ Completing this lab will provide you with an understanding of:
 
 ## Prerequisites
 - Redis CLI (see [here](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-redis-cli-tool)) or RedisInsight v2 (see [here](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
-- Redis Stack or Azure Cache for Redis Enterprise with the JSON module enabled
+- Azure Cache for Redis Enterprise with the RedisJSON and RediSearch modules enabled:
+    - [Quickstart: Create a Redis Enterprise cache](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/quickstart-create-redis-enterprise)
+
+        > **Please note:** When creating your Redis Enterprise cache, in the Advanced tab, select the "RedisJson" and "RediSearch" modules. This will force you to select the "Enterprise" Clustering Policy. 
 - .NET 6 (for the code examples)
 
 ## Steps
