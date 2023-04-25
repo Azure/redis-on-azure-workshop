@@ -18,7 +18,7 @@ Completing this lab will provide you with an understanding of:
 - How RedisJSON can be used in a .NET application
 
 ## Prerequisites
-- Redis CLI (see [here](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-redis-cli-tool)) or RedisInsight v2 (see [here](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2))
+- Redis CLI (see [here](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/cache-how-to-redis-cli-tool)) or RedisInsight v2 (see [here](https://apps.microsoft.com/store/detail/redisinsight/XP8K1GHCB0F1R2)) - *we would recommend RedisInsight for this lab.*
 - Azure Cache for Redis Enterprise with the RedisJSON and RediSearch modules enabled:
     - [Quickstart: Create a Redis Enterprise cache](https://learn.microsoft.com/en-us/azure/azure-cache-for-redis/quickstart-create-redis-enterprise)
 
