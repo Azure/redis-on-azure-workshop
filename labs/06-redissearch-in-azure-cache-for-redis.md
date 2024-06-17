@@ -277,3 +277,5 @@ FT.SEARCH idx1 '@coords:[-104.800644 38.846127 100 mi]'
 1. [RediSearch documentation](https://redis.io/docs/stack/search/)
 2. [RediSearch query syntax](https://redis.io/docs/stack/search/reference/query_syntax/)
 3. [Redis JSON and Search Resources in GitHub](https://github.com/Redislabs-Solution-Architects/json-search-demo)
+___
+[Next Lab](./07-search-and-query-nredisstack-in-azure-cache-for-redis.md)

@@ -11,10 +11,14 @@ The world is moving faster than ever, and software needs to keep up with the dem
 4. [Lab 4 - Streams in Azure Cache for Redis](./labs/04-streams-in-azure-cache-for-redis.md)
 5. [Lab 5 - RedisJSON in Azure Cache for Redis](./labs/05-redisjson-in-azure-cache-for-redis.md)
 6. [Lab 6 - RedisSearch in Azure Cache for Redis](./labs/06-redissearch-in-azure-cache-for-redis.md)
+7. [Lab 7 - Search and Query with NRedisStack in Azure Cache for Redis](./labs/07-search-and-query-nredisstack-in-azure-cache-for-redis.md)
+8. [Lab 8 - Vector Search with NRedisStack in Azure Cache for Redis](./labs/08-vector-search-nredisstack-in-azure-cache-for-redis.md)
 
 ### Stretch Goals
 
 1. Create an API using ASP.NET Core to return the JSON results from a full-text search, natively performed by RedisSearch.
+2. Learn to use the NRedisStack client library to manipulate and search JSON documents
+3. Perform vector search with the NRedisStack client library and model sentences using the Azure AI services
 
 ## Contributing
 
